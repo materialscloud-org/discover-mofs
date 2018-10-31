@@ -9,11 +9,11 @@ import pandas as pd
 import sqlalchemy
 import re
 
-folder_db = 'data/'
+folder_db = 'data'
 structure_folder = folder_db + '/structures/'
-properties_csv = folder_db + '/properties.csv'
-table_name = 'cofs'  # parameters will be put in this database
-db_params = 'sqlite:///{}database.db'.format(folder_db)
+properties_csv = folder_db + '/all_MOFs_screening_data.csv'
+table_name = 'mofs'  # parameters will be put in this database
+db_params = 'sqlite:///{}/database.db'.format(folder_db)
 
 data = None
 
@@ -31,11 +31,8 @@ def parse_csv(path):
 
 
 def add_filenames(data):
-    print("Adding filenames")
-    fnames = [
-        "{}_{}_{}_relaxed.cif".format(row['linkerA'], row['linkerB'],
-                                      row['net'])
-        for _index, row in data.iterrows()
+    print("# Adding filenames")
+    fnames = [ "{}.cif".format(row['MOFname'])  for _index, row in data.iterrows()
     ]
     data['filename'] = fnames
     return data
@@ -78,12 +75,12 @@ def rename_columns(data):
 
     Need to rename columns to valid python variable names.
     """
-    print("Renaming columns")
+    print("# Renaming columns")
     labels = data.keys()
     #rep_dict = { l: l.replace(' ', '_') for l in labels }
     #data.rename(index=str, columns=rep_dict, inplace=True)
 
-    unit_regex = re.compile('\[(.*?)\]')
+    unit_regex = re.compile('\s+\[(.*?)\]')
     for label in labels:
         match = re.search(unit_regex, label)
         # provide units as separate column
@@ -99,9 +96,9 @@ def rename_columns(data):
     return data
 
 
-def fill_db():
+def fill_db(data):
     #data.to_sql(table_name, con=engine, if_exists='replace')
-    print("Filling database")
+    print("# Filling database")
     to_sql_k(
         pandas_sql,
         data,
@@ -150,6 +147,6 @@ def get_cif_content(filename):
 if __name__ == "__main__":
     data = parse_csv(properties_csv)
     data = add_filenames(data)
-    rename_columns()
-    fill_db()
+    rename_columns(data)
+    fill_db(data)
     automap_table(engine)

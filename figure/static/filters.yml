@@ -1,7 +1,4 @@
 # Specify filters
 ---
-- dimensions
-- bond_type
-- deliverable_capacity
-- density
+- topology
 - surface_area

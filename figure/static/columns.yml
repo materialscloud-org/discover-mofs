@@ -1,84 +1,63 @@
 # Columns metadata
 # 2 types supported: float, list
 ---
-- column: dimensions
+- column: topology
   type: list
-  label: Dimensionality
+  label: Topology
   values:
-  - 2
-  - 3
-  labels:
-  - 2D layers
-  - 3D network
+  - sra
+  - pcu
+  - fof
+  - acs
+  - bcu
+  - pts
+  - the
+  - tbo
+  - nbo
+  - etb
+  - rht
 
-- column: bond_type
-  type: list
-  label: Bond type
-  values:
-  - amide
-  - amine
-  - imine
-  - CC
-  - mixed
-
-- column: density
+- column: CO2/N2_selectivity
   type: float
-  label: Density
+  label: CO2/N2 selectivity
   range:
+  - 0.0
   - 10.0
-  - 1200.0
-  unit: kg/m^3
 
-- column: deliverable_capacity
+#- column: deliverable_capacity
+#  type: float
+#  default:
+#  - 175
+#  - 300
+#  label: Deliverable capacity
+#  range:
+#  - 0.0
+#  - 300.0
+#  unit: v STP/v
+
+- column: void_fraction
   type: float
-  default:
-  - 175
-  - 300
-  label: Deliverable capacity
+  label: Void fraction
   range:
   - 0.0
-  - 300.0
-  unit: v STP/v
+  - 1.0
 
-- column: absolute_methane_uptake_high_P
+- column: largest_free_sphere_diameter
   type: float
-  label: CH4 uptake High-P
+  label: Diamater of largest free sphere
+  range:
+  - 0.0
+  - 20.0
+  unit: Angstrom
+
+
+- column: working_capacity_vacuum_swing
+  type: float
+  label: Working capacity (vacuum swing)
   range:
   - 0.0
   - 400.0
-  unit: mol/kg
-
-- column: absolute_methane_uptake_low_P
-  type: float
-  label: CH4 uptake Low-P
-  range:
-  - 0.0
-  - 400.0
-  unit: mol/kg
-
-- column: heat_desorption_high_P
-  type: float
-  label: CH4 heat of desorption High-P
-  range:
-  - 0.0
-  - 30.0
-  unit: kJ/mol
-
-- column: heat_desorption_low_P
-  type: float
-  label: CH4 heat of desorption Low-P
-  range:
-  - 0.0
-  - 30.0
-  unit: kJ/mol
-
-- column: supercell_volume
-  type: float
-  label: Supercell volume
-  range:
-  - 0.0
-  - 1000000.0
-  unit: A^3
+  unit: mmol/g
 
 - column: surface_area
   type: float
