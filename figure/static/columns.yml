@@ -22,7 +22,7 @@
   label: CO2/N2 selectivity
   range:
   - 0.0
-  - 10.0
+  - 500.0
 
 #- column: deliverable_capacity
 #  type: float
@@ -56,7 +56,7 @@
   label: Working capacity (vacuum swing)
   range:
   - 0.0
-  - 400.0
+  - 10.0
   unit: mmol/g
 
 - column: surface_area

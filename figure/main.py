@@ -56,6 +56,7 @@ def load_preset(attr, old, new):  # pylint: disable=unused-argument,redefined-bu
         pass
 
     # reset all filters
+    # pylint: disable=redefined-builtin
     for q in config.filter_list:
         filter = filters_dict[q]
 
@@ -95,7 +96,7 @@ inp_clr = Select(
     title='Color', options=plot_options + [('bond_type', 'Bond type')])
 
 
-def on_filter_change(attr, old, new): # pylint: disable=unused-argument
+def on_filter_change(attr, old, new):  # pylint: disable=unused-argument
     """Change color of plot button to blue"""
     btn_plot.button_type = 'primary'
 
@@ -112,7 +113,7 @@ def get_slider(desc, range, default=None):
     return slider
 
 
-def get_select(desc, values, default=None, labels=None):
+def get_select(desc, values, default=None, labels=None):  # pylint: disable=unused-argument
     if default is None:
         # by default, make all selections active
         default = range(len(values))
@@ -222,17 +223,45 @@ controls = [inp_x, inp_y, inp_clr] + [_v for k, _v in filters_dict.items()
                                       ] + [btn_plot, plot_info]
 
 
+class Quantity(object):
+    """Helper functions for plotting a quantity"""
+
+    def __init__(self, quantity):
+        self.quantity = quantity
+
+    @property
+    def label(self):
+        return self.quantity['label']
+
+    @property
+    def unit(self):
+        try:
+            return self.quantity['unit']
+        except KeyError:
+            return None
+
+    @property
+    def unit_str(self):
+        u = self.unit
+        if u is None:
+            return ""
+        return "[{}]".format(u)
+
+    @property
+    def axis_label(self):
+        return "{} {}".format(self.label, self.unit_str)
+
+
 def update_legends(ly):
 
-    q_x = quantities[inp_x.value]
-    q_y = quantities[inp_y.value]
+    q_x = Quantity(quantities[inp_x.value])
+    q_y = Quantity(quantities[inp_y.value])
+
     p = ly.children[0].children[1]
 
-    #title = "{} vs {}".format(q_x["label"], q_y["label"])
-    xlabel = "{} [{}]".format(q_x["label"], q_x["unit"])
-    ylabel = "{} [{}]".format(q_y["label"], q_y["unit"])
-    xhover = (q_x["label"], "@x {}".format(q_x["unit"]))
-    yhover = (q_y["label"], "@y {}".format(q_y["unit"]))
+    #title = "{} vs {}".format(q_x.label, q_y.label)
+    xhover = (q_x.label, "@x {}".format(q_x.unit_str))
+    yhover = (q_y.label, "@y {}".format(q_y.unit_str))
 
     if inp_clr.value == 'bond_type':
         clr_label = "Bond type"
@@ -240,21 +269,21 @@ def update_legends(ly):
             ("name", "@name"),
             xhover,
             yhover,
-            ("Bond type", "@color"),
+            (clr_label, "@color"),
         ]
     else:
-        q_clr = quantities[inp_clr.value]
-        clr_label = "{} [{}]".format(q_clr["label"], q_clr["unit"])
+        q_clr = Quantity(quantities[inp_clr.value])
+        clr_label = q_clr.axis_label
         hover.tooltips = [
             ("name", "@name"),
             xhover,
             yhover,
-            (q_clr["label"], "@color {}".format(q_clr["unit"])),
+            (q_clr.label, "@color {}".format(q_clr.unit_str)),
         ]
 
-    p.xaxis.axis_label = xlabel
-    p.yaxis.axis_label = ylabel
-    p.title.text = clr_label
+    p.xaxis.axis_label = q_x.axis_label
+    p.yaxis.axis_label = q_y.axis_label
+    p.title.text = q_clr.axis_label
 
     url = "detail?name=@name"
     tap.callback = bmd.OpenURL(url=url)
@@ -284,7 +313,9 @@ def update():
 
     #update_legends(l)
 
-    projections = [inp_x.value, inp_y.value, inp_clr.value, 'name', 'filename']
+    projections = [
+        inp_x.value, inp_y.value, inp_clr.value, 'MOFname', 'filename'
+    ]
 
     source.data = get_data(projections, filters_dict, quantities, plot_info)
 
