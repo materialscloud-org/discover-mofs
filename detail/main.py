@@ -12,7 +12,7 @@ from bokeh.models.widgets import PreText, Button
 from bokeh.io import curdoc
 
 from jsmol import JSMol
-#from import_db import get_cif_content
+from import_db import get_cif_content
 from detail.query import get_sqlite_data as get_data
 
 html = bmd.Div(
@@ -100,7 +100,7 @@ def get_cif_content_from_os(filename):
     return data.content
 
 
-cif_str = get_cif_content_from_os(entry.filename)
+cif_str = get_cif_content(entry.filename)
 
 
 def get_cif_url(filename):

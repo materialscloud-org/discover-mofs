@@ -32,7 +32,8 @@ def parse_csv(path):
 
 def add_filenames(data):
     print("# Adding filenames")
-    fnames = [ "{}.cif".format(row['MOFname'])  for _index, row in data.iterrows()
+    fnames = [
+        "{}.cif".format(row['MOFname']) for _index, row in data.iterrows()
     ]
     data['filename'] = fnames
     return data
@@ -93,6 +94,9 @@ def rename_columns(data):
             label_new = label.replace(' ', '_')
             data.rename(index=str, columns={label: label_new}, inplace=True)
 
+    # rename MOFname => name
+    data.rename(index=str, columns={'MOFname': 'name'}, inplace=True)
+
     return data
 
 
@@ -123,8 +127,6 @@ def automap_table(engine):
       
     See https://stackoverflow.com/a/35397969/1069467 for workarounds
     """
-    from sqlalchemy.ext.automap import automap_base
-
     Base = sqlalchemy.ext.automap.automap_base()
     Base.prepare(engine, reflect=True)
 

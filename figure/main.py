@@ -313,9 +313,7 @@ def update():
 
     #update_legends(l)
 
-    projections = [
-        inp_x.value, inp_y.value, inp_clr.value, 'MOFname', 'filename'
-    ]
+    projections = [inp_x.value, inp_y.value, inp_clr.value, 'name', 'filename']
 
     source.data = get_data(projections, filters_dict, quantities, plot_info)
 
