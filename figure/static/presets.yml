@@ -3,11 +3,11 @@
 ---
 default:
   clr: void_fraction
-  x: working_capacity_vacuum_swing
-  y: CO2/N2_selectivity
+  x: CO2/N2_selectivity
+  y: working_capacity_vacuum_swing
   working_capacity_vacuum_swing:
   - 2.0
-  - 10.0
+  - 6.0
   CO2/N2_selectivity:
-  - 100.0
-  - 500.0
+  - 50
+  - 250.0
