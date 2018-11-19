@@ -1,0 +1,13 @@
+# Presets
+# Keys: x, y, clr + filters
+---
+default:
+  clr: adsorbaphore_label
+  x: henry_coefficient_CO2_298K
+  y: henry_coefficient_H2O_298K
+  henry_coefficient_H2O_298K:
+  - 0.0
+  - 1.0
+  henry_coefficient_CO2_298K:
+  - 0.0
+  - 1.2

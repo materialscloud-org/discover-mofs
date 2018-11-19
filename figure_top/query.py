@@ -15,7 +15,7 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
     from import_db import automap_table, engine
     from sqlalchemy.sql import select, and_
 
-    Table = automap_table(engine, 'mofs')
+    Table = automap_table(engine, 'top_mofs')
 
     selections = []
     for label in projections:
@@ -38,14 +38,14 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
 
     nresults = len(results)
     if not results:
-        plot_info.text = "No matching COFs found."
+        plot_info.text = "No matching MOFs found."
         return data_empty
     elif nresults > max_points:
         results = results[:max_points]
-        plot_info.text = "{} COFs found.\nPlotting {}...".format(
+        plot_info.text = "{} MOFs found.\nPlotting {}...".format(
             nresults, max_points)
     else:
-        plot_info.text = "{} COFs found.\nPlotting {}...".format(
+        plot_info.text = "{} MOFs found.\nPlotting {}...".format(
             nresults, nresults)
 
     # x,y position
@@ -53,7 +53,7 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
     x = list(map(float, x))
     y = list(map(float, y))
 
-    if projections[2] == 'bond_type':
+    if projections[2] == 'adsorbaphore_label':
         #clrs = map(lambda clr: bondtypes.index(clr), clrs)
         clrs = list(map(str, clrs))
     else:
@@ -100,20 +100,20 @@ def get_data_aiida(projections, sliders_dict, quantities, plot_info):
 
     nresults = qb.count()
     if nresults == 0:
-        plot_info.text = "No matching COFs found."
+        plot_info.text = "No matching MOFs found."
         return data_empty
 
-    plot_info.text = "{} COFs found. Plotting...".format(nresults)
+    plot_info.text = "{} MOFs found. Plotting...".format(nresults)
 
     # x,y position
     x, y, clrs, uuids, names, cif_uuids = zip(*qb.all())
-    plot_info.text = "{} COFs queried".format(nresults)
+    plot_info.text = "{} MOFs queried".format(nresults)
     x = map(float, x)
     y = map(float, y)
     cif_uuids = map(str, cif_uuids)
     uuids = map(str, uuids)
 
-    if projections[2] == 'bond_type':
+    if projections[2] == 'adsorbaphore_label':
         #clrs = map(lambda clr: bondtypes.index(clr), clrs)
         clrs = map(str, clrs)
     else:

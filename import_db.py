@@ -11,8 +11,6 @@ import re
 
 folder_db = 'data'
 structure_folder = folder_db + '/structures/'
-properties_csv = folder_db + '/all_MOFs_screening_data.csv'
-table_name = 'mofs'  # parameters will be put in this database
 db_params = 'sqlite:///{}/database.db'.format(folder_db)
 
 data = None
@@ -100,7 +98,7 @@ def rename_columns(data):
     return data
 
 
-def fill_db(data):
+def fill_db(data, table_name):
     #data.to_sql(table_name, con=engine, if_exists='replace')
     print("# Filling database")
     to_sql_k(
@@ -117,7 +115,7 @@ def fill_db(data):
     print(test)
 
 
-def automap_table(engine):
+def automap_table(engine, table_name):
     """Try to infer model from Database.
     
     This currently does not work because
@@ -148,9 +146,15 @@ def get_cif_content(filename):
     return content
 
 
-if __name__ == "__main__":
+def fill_table(file_name, table_name):
+    properties_csv = folder_db + '/' + file_name
     data = parse_csv(properties_csv)
     data = add_filenames(data)
     rename_columns(data)
-    fill_db(data)
-    automap_table(engine)
+    fill_db(data, table_name)
+    automap_table(engine, table_name)
+
+
+if __name__ == "__main__":
+    fill_table(file_name='all_MOFs_screening_data.csv', table_name='mofs')
+    fill_table(file_name='top_MOFs_screening_data.csv', table_name='top_mofs')

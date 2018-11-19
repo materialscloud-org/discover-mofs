@@ -1,0 +1,9 @@
+# Specify filters
+---
+- adsorbaphore_label
+- henry_coefficient_CO2_298K
+- henry_coefficient_H2O_298K
+- CO2/N2_selectivity
+- working_capacity_vacuum_swing
+- surface_area
+- void_fraction
