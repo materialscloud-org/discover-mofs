@@ -13,4 +13,4 @@ services:
     volumes:
      - './data:/project/discover-cofs/data'
     ports:
-      - '3245:5006'
+      - '3247:5006'

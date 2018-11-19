@@ -12,7 +12,7 @@ from bokeh.models.widgets import PreText, Button
 from bokeh.io import curdoc
 
 from jsmol import JSMol
-from import_db import get_cif_content
+#from import_db import get_cif_content
 from detail.query import get_sqlite_data as get_data
 
 html = bmd.Div(
@@ -35,7 +35,7 @@ def get_name_from_url():
         if isinstance(name, bytes):
             name = name.decode()
     except (TypeError, KeyError):
-        name = 'linker91_CH_linker92_N_clh_relaxed'
+        name = 'str_m5_o1_o18_sra_sym.36'
 
     return name
 
@@ -94,31 +94,18 @@ def get_cif_content_from_os(filename):
     """Load CIF content via GET request from object store."""
     import requests
 
-    url = "https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/discover-cofs/structures/{}".format(
+    url = "https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/discover-mofs/structures/{}".format(
         filename)
     data = requests.get(url)
     return data.content
 
 
-cif_str = get_cif_content(entry.filename)
-
-
-def get_cif_url(filename):
-    """Return URL for CIF file name"""
-    #name = "linker100_CH2_linker105_NH_pts_relaxed.cif"
-    url = "https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/discover-cofs/structures/{}".format(
-        filename)
-    return url
-
+cif_str = get_cif_content_from_os(entry.filename)
 
 info = dict(
     height="100%",
     width="100%",
     use="HTML5",
-    #serverURL="https://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
-    #j2sPath="https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-    #serverURL="https://www.materialscloud.org/discover/scripts/external/jsmol/php/jsmol.php",
-    #j2sPath="https://www.materialscloud.org/discover/scripts/external/jsmol/j2s",
     serverURL="detail/static/jsmol/php/jsmol.php",
     j2sPath="detail/static/jsmol/j2s",
     script="""set antialiasDisplay ON;
