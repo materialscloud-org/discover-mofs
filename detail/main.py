@@ -5,6 +5,7 @@ from os.path import dirname, join
 from copy import copy
 from collections import OrderedDict
 import json
+import re
 
 from bokeh.layouts import layout, widgetbox
 import bokeh.models as bmd
@@ -113,7 +114,16 @@ def get_cif_content_from_os(filename):
     return data.content
 
 
+def postprocess_cif_for_jsmol(cif_str):
+    """Remove bonds from CIF for jsmol.
+
+    Some CIFs contain bonds which (for some reason) causes jsmol not to display the unit cell.
+    """
+    return re.sub(r'loop_\s*_geom_bond_atom.+', '', cif_str, flags=re.DOTALL)
+
+
 cif_str = get_cif_content_from_os(entry.filename)
+#cif_str = get_cif_content(entry.filename)
 
 info = dict(
     height="100%",
@@ -125,7 +135,7 @@ info = dict(
 load data "cifstring"
 {}
 end "cifstring"
-""".format(cif_str)
+""".format(postprocess_cif_for_jsmol(cif_str))
     ## Note: Need PHP server for approach below to work
     #    script="""set antialiasDisplay ON;
     #load cif::{};
