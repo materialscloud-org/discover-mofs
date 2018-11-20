@@ -19,7 +19,7 @@ RUN echo "/project/jsmol-bokeh-extension" >> /usr/local/lib/python2.7/dist-packa
 WORKDIR /project/discover-cofs
 COPY figure ./figure
 COPY figure_top ./figure_top
-COPY select-figure ./figure
+COPY select-figure ./select-figure
 COPY detail ./detail
 RUN ln -s /project/jmol-14.29.22/jsmol ./detail/static/jsmol
 COPY setup.py import_db.py ./
