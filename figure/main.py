@@ -12,10 +12,10 @@ from bokeh.palettes import Viridis256
 from bokeh.models.widgets import RangeSlider, Select, Button, PreText, CheckboxButtonGroup
 from bokeh.io import curdoc
 
-import config
 from config import quantities, presets
 from figure.query import get_data_sqla as get_data
 from figure.query import data_empty
+from figure import config
 
 html = bmd.Div(
     text=open(join(config.static_dir, "description.html")).read(), width=800)
@@ -84,16 +84,13 @@ def load_preset(attr, old, new):  # pylint: disable=unused-argument,redefined-bu
 
 # quantities
 nq = len(quantities)
-bondtypes = list(config.bondtype_dict.keys())
-bondtype_colors = list(config.bondtype_dict.values())
 
 # quantity selectors
 plot_options = [(q, quantities[q]['label']) for q in config.plot_quantities]
 inp_x = Select(title='X', options=plot_options)
 inp_y = Select(title='Y', options=plot_options)
 #inp_clr = Select(title='Color', options=plot_options)
-inp_clr = Select(
-    title='Color', options=plot_options + [('bond_type', 'Bond type')])
+inp_clr = Select(title='Color', options=plot_options)
 
 
 def on_filter_change(attr, old, new):  # pylint: disable=unused-argument
@@ -164,7 +161,7 @@ def create_plot():
     """Creates scatter plot.
 
     Note: While it is usually enough to update the data source, redrawing the
-    plot is needed for bond_type coloring, when the colormap needs to change
+    plot is needed for adsorbaphore_label coloring, when the colormap needs to change
     and the colorbar is removed.
     """
     global source
@@ -190,11 +187,11 @@ def create_plot():
     p_new.title.text_font_size = '10pt'
     p_new.title.text_font_style = 'italic'
 
-    if inp_clr.value == 'bond_type':
+    if inp_clr.value == 'adsorbaphore_label':
+        q = config.Quantity('adsorbaphore_label')
         from bokeh.transform import factor_cmap
-        paper_palette = list(config.bondtype_dict.values())
-        fill_color = factor_cmap(
-            'color', palette=paper_palette, factors=bondtypes)
+        palette = list(q.colors)
+        fill_color = factor_cmap('color', palette=palette, factors=q.values)
         p_new.circle(
             'x',
             'y',
@@ -223,39 +220,10 @@ controls = [inp_x, inp_y, inp_clr] + [_v for k, _v in filters_dict.items()
                                       ] + [btn_plot, plot_info]
 
 
-class Quantity(object):
-    """Helper functions for plotting a quantity"""
-
-    def __init__(self, quantity):
-        self.quantity = quantity
-
-    @property
-    def label(self):
-        return self.quantity['label']
-
-    @property
-    def unit(self):
-        try:
-            return self.quantity['unit']
-        except KeyError:
-            return None
-
-    @property
-    def unit_str(self):
-        u = self.unit
-        if u is None:
-            return ""
-        return "[{}]".format(u)
-
-    @property
-    def axis_label(self):
-        return "{} {}".format(self.label, self.unit_str)
-
-
 def update_legends(ly):
 
-    q_x = Quantity(quantities[inp_x.value])
-    q_y = Quantity(quantities[inp_y.value])
+    q_x = config.Quantity(inp_x.value)
+    q_y = config.Quantity(inp_y.value)
 
     p = ly.children[0].children[1]
 
@@ -263,23 +231,13 @@ def update_legends(ly):
     xhover = (q_x.label, "@x {}".format(q_x.unit_str))
     yhover = (q_y.label, "@y {}".format(q_y.unit_str))
 
-    if inp_clr.value == 'bond_type':
-        clr_label = "Bond type"
-        hover.tooltips = [
-            ("name", "@name"),
-            xhover,
-            yhover,
-            (clr_label, "@color"),
-        ]
-    else:
-        q_clr = Quantity(quantities[inp_clr.value])
-        clr_label = q_clr.axis_label
-        hover.tooltips = [
-            ("name", "@name"),
-            xhover,
-            yhover,
-            (q_clr.label, "@color {}".format(q_clr.unit_str)),
-        ]
+    q_clr = config.Quantity(inp_clr.value)
+    hover.tooltips = [
+        ("name", "@name"),
+        xhover,
+        yhover,
+        (q_clr.label, "@color {}".format(q_clr.unit_str)),
+    ]
 
     p.xaxis.axis_label = q_x.axis_label
     p.yaxis.axis_label = q_y.axis_label
@@ -338,11 +296,12 @@ btn_plot.on_click(update)
 def on_change_clr(attr, old, new):
     """Remember to redraw plot next time, when necessary.
 
-    When switching between bond_type color and something else,
+    When switching between adsorbaphore_label color and something else,
     the plot needs to be redrawn.
     """
     global redraw_plot
-    if (new == 'bond_type' or old == 'bond_type') and new != old:
+    if (new == 'adsorbaphore_label'
+            or old == 'adsorbaphore_label') and new != old:
         redraw_plot = True
 
     check_uniqueness(attr, old, new)

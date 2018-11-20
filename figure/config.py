@@ -16,14 +16,6 @@ plot_quantities = [
     q for q in quantities.keys() if quantities[q]['type'] == 'float'
 ]
 
-bondtype_dict = collections.OrderedDict([
-    ('amide', "#1f77b4"),
-    ('amine', "#d62728"),
-    ('imine', "#ff7f0e"),
-    ('CC', "#2ca02c"),
-    ('mixed', "#778899"),
-])
-
 with open(join(static_dir, "filters.yml"), 'r') as f:
     filter_list = yaml.load(f)
 
@@ -34,4 +26,47 @@ for k in presets.keys():
     if 'clr' not in presets[k].keys():
         presets[k]['clr'] = presets['default']['clr']
 
-max_points = 70000
+max_points = 30000
+
+
+class Quantity(object):
+    """Helper functions for plotting a quantity"""
+
+    def __init__(self, quantity_str):
+        self.quantity = quantities[quantity_str]
+
+    @property
+    def label(self):
+        return self.quantity['label']
+
+    @property
+    def unit(self):
+        try:
+            return self.quantity['unit']
+        except KeyError:
+            return None
+
+    @property
+    def unit_str(self):
+        u = self.unit
+        if u is None:
+            return ""
+        return "[{}]".format(u)
+
+    @property
+    def axis_label(self):
+        return "{} {}".format(self.label, self.unit_str)
+
+    @property
+    def colors(self):
+        try:
+            return self.quantity['colors']
+        except KeyError:
+            return None
+
+    @property
+    def values(self):
+        try:
+            return self.quantity['values']
+        except KeyError:
+            return None

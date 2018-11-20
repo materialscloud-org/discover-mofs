@@ -12,10 +12,10 @@ from bokeh.palettes import Viridis256
 from bokeh.models.widgets import RangeSlider, Select, Button, PreText, CheckboxButtonGroup
 from bokeh.io import curdoc
 
-import config
-from config import quantities, presets
 from figure_top.query import get_data_sqla as get_data
 from figure_top.query import data_empty
+from figure_top import config
+from figure_top.config import quantities, presets
 
 html = bmd.Div(
     text=open(join(config.static_dir, "description.html")).read(), width=800)
