@@ -1,6 +1,9 @@
 import collections
-import yaml
+from ruamel import yaml
+import warnings
 from os.path import join, dirname
+
+warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
 static_dir = join(dirname(__file__), "static")
 

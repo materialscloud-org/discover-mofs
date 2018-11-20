@@ -245,7 +245,7 @@ def update_legends(ly):
     p.yaxis.axis_label = q_y.axis_label
     p.title.text = q_clr.axis_label
 
-    url = "detail?name=@name"
+    url = "detail?name=@name&table=top_mofs"
     tap.callback = bmd.OpenURL(url=url)
     #tap.callback = bmd.CustomJS.from_py_func(update_tap)
     #tap.callback = bmd.CustomJS(code="""console.info("hello TapTool")""")

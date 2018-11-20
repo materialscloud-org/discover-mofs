@@ -15,7 +15,9 @@ if __name__ == '__main__':
         license="MIT",
         classifiers=["Programming Language :: Python"],
         version="0.1.0",
-        install_requires=["bokeh>=0.13", "pandas", "sqlalchemy"],
+        install_requires=[
+            "bokeh>=0.13", "pandas", "sqlalchemy", "ruamel.yaml"
+        ],
         extras_require={
             "pre-commit": [
                 "pre-commit==1.11.0", "yapf==0.24.0", "prospector==0.12.11",

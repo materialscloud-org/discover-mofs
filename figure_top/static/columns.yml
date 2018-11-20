@@ -71,16 +71,16 @@
   type: float
   label: Henry coefficient CO2 (298K)
   range:
-  - 0.0
-  - 2.0
+  - 0.0e6
+  - 2.0e6
   unit: mol/kg/bar
 
 - column: henry_coefficient_H2O_298K
   type: float
   label: Henry coefficient H2O (298K)
   range:
-  - 0.0
-  - 2.0
+  - 0.0e6
+  - 2.0e6
   unit: mol/kg/bar
 
 - column: adsorbaphore_label

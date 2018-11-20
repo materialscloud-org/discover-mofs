@@ -2,7 +2,7 @@
 """
 
 
-def get_sqlite_data(name, plot_info):
+def get_sqlite_data(name, plot_info, table_name):
     """Query the sqlite database"""
     from import_db import automap_table, engine
     from sqlalchemy.orm import sessionmaker
@@ -11,13 +11,13 @@ def get_sqlite_data(name, plot_info):
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    Table = automap_table(engine)
+    Table = automap_table(engine, table_name)
 
     query = session.query(Table).filter_by(name=str(name))
 
     nresults = query.count()
     if nresults == 0:
-        plot_info.text = "No matching COF found."
+        plot_info.text = "No matching MOF found."
         return None
     return query.one()
 
@@ -45,6 +45,6 @@ def get_data_aiida(cif_uuid, plot_info):
 
     nresults = qb.count()
     if nresults == 0:
-        plot_info.text = "No matching COF found."
+        plot_info.text = "No matching MOF found."
         return None
     return qb.one()

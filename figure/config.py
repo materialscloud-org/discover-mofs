@@ -1,6 +1,9 @@
 import collections
-import yaml
+from ruamel import yaml
+import warnings
 from os.path import join, dirname
+
+warnings.simplefilter('ignore', yaml.error.UnsafeLoaderWarning)
 
 static_dir = join(dirname(__file__), "static")
 
@@ -9,7 +12,9 @@ with open(join(static_dir, "columns.yml"), 'r') as f:
 
 quantities = collections.OrderedDict([(q['column'], q) for q in quantity_list])
 
-plot_quantities = [ q for q in quantities.keys() if quantities[q]['type'] == 'float' ]
+plot_quantities = [
+    q for q in quantities.keys() if quantities[q]['type'] == 'float'
+]
 
 bondtype_dict = collections.OrderedDict([
     ('amide', "#1f77b4"),

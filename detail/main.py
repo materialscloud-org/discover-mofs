@@ -40,6 +40,18 @@ def get_name_from_url():
     return name
 
 
+def get_table_from_url():
+    args = curdoc().session_context.request.arguments
+    try:
+        table = args.get('table')[0]
+        if isinstance(table, bytes):
+            table = table.decode()
+    except (TypeError, KeyError):
+        table = 'mofs'
+
+    return table
+
+
 def table_widget(entry):
     from bokeh.models import ColumnDataSource
     from bokeh.models.widgets import DataTable, TableColumn
@@ -87,7 +99,7 @@ def table_widget(entry):
 
 
 cof_name = get_name_from_url()
-entry = get_data(cof_name, plot_info)
+entry = get_data(cof_name, plot_info, get_table_from_url())
 
 
 def get_cif_content_from_os(filename):
@@ -96,6 +108,7 @@ def get_cif_content_from_os(filename):
 
     url = "https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/discover-mofs/structures/{}".format(
         filename)
+    print(url)
     data = requests.get(url)
     return data.content
 

@@ -6,8 +6,8 @@ default:
   x: henry_coefficient_CO2_298K
   y: henry_coefficient_H2O_298K
   henry_coefficient_H2O_298K:
-  - 0.0
-  - 1.0
+  - 0.0e6
+  - 1.0e6
   henry_coefficient_CO2_298K:
-  - 0.0
-  - 1.2
+  - 0.0e6
+  - 1.2e6

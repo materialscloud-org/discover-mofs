@@ -32,6 +32,15 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
                 f = getattr(Table, k).in_([v.tags[i] for i in v.active])
                 filters.append(f)
 
+    # these entries are missing data
+    bad_names = [
+        'str_m2_o1_o23_pcu_sym.119', 'str_m2_o1_o25_pcu_sym.248',
+        'str_m2_o41_o41_fof_sym.30', 'str_m2_o40_o41_fof_sym.67',
+        'str_m2_o1_o25_pcu_sym.178', 'str_m2_o1_o13_pcu_sym.213',
+        'str_m2_o1_o9_pcu_sym.164', 'str_m2_o1_o1_pcu_sym.28'
+    ]
+    filters.append(~Table.name.in_(bad_names))
+
     s = select(selections).where(and_(*filters))
 
     results = engine.connect().execute(s).fetchall()
