@@ -168,7 +168,7 @@ def create_plot():
     p_new = figure(
         plot_height=600,
         plot_width=700,
-        toolbar_location='below',
+        toolbar_location='above',
         tools=[
             'pan',
             'wheel_zoom',
@@ -178,7 +178,8 @@ def create_plot():
             hover,
             tap,
         ],
-        active_scroll='wheel_zoom',
+        #active_scroll='box_zoom',
+        active_drag='box_zoom',
         output_backend='webgl',
         title='',
         title_location='right',
