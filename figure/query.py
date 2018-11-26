@@ -32,6 +32,17 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
                 f = getattr(Table, k).in_([v.tags[i] for i in v.active])
                 filters.append(f)
 
+    # Leopold: Some structures have void_fraction = -1
+    # Pete: Likely, some structures do not have measurable pores using zeo++.
+    # This doesn't necessarily mean 0 uptake however, as zeo++ uses hard
+    # spheres to measure pore space, while a lennard-jones function governs the
+    # adsorption measured by GCMC.
+    # The selectivity ratio would be high in these cases, as even slight CO2
+    # adsorption but significantly less N2 will yield a high selectivity. I
+    # think I filtered these cases out of the plot, as they would be
+    # uninteresting from a materials design point of view.
+    filters.append(Table.void_fraction >= 0)
+
     s = select(selections).where(and_(*filters))
 
     results = engine.connect().execute(s).fetchall()
