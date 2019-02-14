@@ -1,9 +1,11 @@
 /* Style for select-figure content */
 
+/* needed only when served via bokeh 
 .bk-layout-fixed {
     margin: 0 auto;
     text-align: center;
 }
+*/
 
 div.content {
     margin: 0 auto;
@@ -13,10 +15,28 @@ div.content {
     text-align: center;
 }
 
-table.figures td {
-    padding: 15px;
-    text-align: center;
-    vertical-align: top;
+div.content-float {
+    position: relative;
+    display: inline-block;
+}
+
+div.one-column-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  /* to offset the next grid */
+  margin-block-end: 30px;
+}
+
+div.two-column-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 20px;
+}
+
+div.three-column-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 20px;
 }
 
 figure {
@@ -34,7 +54,7 @@ figure figcaption {
 }
 
 img.figure-thumbnail {
-   max-height: 175px;
+   max-height: 250px;
    width: auto;
    height: auto;
    /* Note: the saved scatter plots tend to have less white space
@@ -44,10 +64,6 @@ img.figure-thumbnail {
    /* background-color:#fff; */
    /* background-color: rgba(245,245,245,.19);*/
    border-radius: 4px;
-}
-
-img.default-figure {
-   max-height: 250px;
 }
 
 /* Container holding the image and the text */

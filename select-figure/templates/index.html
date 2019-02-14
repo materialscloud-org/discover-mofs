@@ -9,49 +9,35 @@
 
 {% block contents %}
 <div class="content" >
+<div class="content-float" >
 
 <p>
   Click on a figure for the <b>interactive plot</b>.
 </p>
 
-<table class="figures">
-<tr>
-
-  <td colspan=4>
+<div class="two-column-grid">
+  {% for fig in figures %}
+  <div class="grid-item">
     <figure>
-      <div class=container>
-        <a href="figure_top">
-          <img class="figure-thumbnail default-figure" src="select-figure/static/images/top_mofs.png">
-          <div class="hover-text">High-performing MOFs</div>
+      <div class="container">
+          <a href="{{ fig.link }}">
+          <img class="figure-thumbnail mdl-card mdl-shadow--2dp main-card" src="select-figure/static/images/{{ fig.image }}">
+          <div class="hover-text">{{ fig.hover_text }}</div>
         </a>
       </div>
       <figcaption>
-      Henry coefficient H2O <i>vs</i> Henry coefficient CO2
+        {{ fig.caption }}
       </figcaption>
     </figure>
-  </td>
+  </div>
+  {% endfor %}
 
-  <td colspan=4>
-    <figure>
-      <div class=container>
-        <a href="figure">
-          <img class="figure-thumbnail default-figure" src="select-figure/static/images/mofs.png">
-          <div class="hover-text">All MOFs</div>
-        </a>
-      </div>
-      <figcaption>
-      Working Capacity <i>vs</i> CO2/N2 Selectivity
-      </figcaption>
-    </figure>
-  </td>
-
-</tr>
-
-</table>
+</div>
 
 <!-- No actual bokeh content to display, but let's keep it here //-->
 {{ super() }}
 
+</div>
 </div>
 
 {% endblock %}
