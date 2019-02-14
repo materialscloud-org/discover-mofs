@@ -1,0 +1,57 @@
+{% extends base %}
+
+{% block postamble %}
+  <style>
+    {% include "material.indigo-blue.min.css" %}
+    {% include "style.css" %}
+  </style>
+{% endblock %}
+
+{% block contents %}
+<div class="content" >
+
+<p>
+  Click on a figure for the <b>interactive plot</b>.
+</p>
+
+<table class="figures">
+<tr>
+
+  <td colspan=4>
+    <figure>
+      <div class=container>
+        <a href="figure_top">
+          <img class="figure-thumbnail default-figure" src="select-figure/static/images/top_mofs.png">
+          <div class="hover-text">High-performing MOFs</div>
+        </a>
+      </div>
+      <figcaption>
+      Henry coefficient H2O <i>vs</i> Henry coefficient CO2
+      </figcaption>
+    </figure>
+  </td>
+
+  <td colspan=4>
+    <figure>
+      <div class=container>
+        <a href="figure">
+          <img class="figure-thumbnail default-figure" src="select-figure/static/images/mofs.png">
+          <div class="hover-text">All MOFs</div>
+        </a>
+      </div>
+      <figcaption>
+      Working Capacity <i>vs</i> CO2/N2 Selectivity
+      </figcaption>
+    </figure>
+  </td>
+
+</tr>
+
+</table>
+
+<!-- No actual bokeh content to display, but let's keep it here //-->
+{{ super() }}
+
+</div>
+
+{% endblock %}
