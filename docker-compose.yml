@@ -6,14 +6,14 @@ services:
     build:
       context: .
       args:
-        BOKEH_PREFIX: /cofs
-    image: discover-cofs:master
+        BOKEH_PREFIX: /mofs
+    image: discover-mofs:master
     command: ["/opt/serve-app.sh"]
     environment:
       PYTHONPATH: '/project'
       SHELL: '/bin/bash'
 
     volumes:
-     - './data:/project/discover-cofs/data'
+     - './data:/project/discover-mofs/data'
     ports:
       - '3247:5006'

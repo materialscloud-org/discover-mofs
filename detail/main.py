@@ -12,7 +12,7 @@ import bokeh.models as bmd
 from bokeh.models.widgets import PreText, Button
 from bokeh.io import curdoc
 
-from jsmol import JSMol
+from jsmol_bokeh_extension import JSMol
 #from import_db import get_cif_content
 from detail.query import get_sqlite_data as get_data
 
