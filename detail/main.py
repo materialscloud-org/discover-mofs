@@ -58,7 +58,7 @@ def table_widget(entry):
     from bokeh.models.widgets import DataTable, TableColumn
 
     entry_dict = copy(entry.__dict__)
-    for k, v in entry_dict.items():
+    for k, _v in entry_dict.items():
         if k == 'id' or k == '_sa_instance_state':
             del entry_dict[k]
 
@@ -154,20 +154,19 @@ applet = JSMol(
 )
 
 sizing_mode = 'fixed'
-l = layout(
+ly = layout([
     [
-        [
-            [[applet], [btn_download_cif]],
-            [[table_widget(entry)], [btn_download_table]],
-        ],
-        [plot_info],
+        [[applet], [btn_download_cif]],
+        [[table_widget(entry)], [btn_download_table]],
     ],
-    sizing_mode=sizing_mode)
+    [plot_info],
+],
+            sizing_mode=sizing_mode)
 
 # We add this as a tab
-tab = bmd.Panel(child=l, title=cof_name)
+tab = bmd.Panel(child=ly, title=cof_name)
 tabs = bmd.widgets.Tabs(tabs=[tab])
 
 # Put the tabs in the current document for display
-curdoc().title = "Covalent Organic Frameworks"
+curdoc().title = "Metal-Organic Frameworks"
 curdoc().add_root(layout([html, tabs]))

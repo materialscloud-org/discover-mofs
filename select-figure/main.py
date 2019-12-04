@@ -9,7 +9,7 @@ from bokeh.io import curdoc
 #curdoc().add_root(layout([html]))
 
 # Put the tabs in the current document for display
-curdoc().title = "Covalent Organic Frameworks"
+curdoc().title = "Metal-Organic Frameworks"
 curdoc().template_variables["figures"] = [
     {
         "link": "figure_top",

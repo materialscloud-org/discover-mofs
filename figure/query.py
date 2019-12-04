@@ -49,14 +49,14 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
 
     nresults = len(results)
     if not results:
-        plot_info.text = "No matching COFs found."
+        plot_info.text = "No matching MOFs found."
         return data_empty
     elif nresults > max_points:
         results = results[:max_points]
-        plot_info.text = "{} COFs found.\nPlotting {}...".format(
+        plot_info.text = "{} MOFs found.\nPlotting {}...".format(
             nresults, max_points)
     else:
-        plot_info.text = "{} COFs found.\nPlotting {}...".format(
+        plot_info.text = "{} MOFs found.\nPlotting {}...".format(
             nresults, nresults)
 
     # x,y position
@@ -71,63 +71,3 @@ def get_data_sqla(projections, sliders_dict, quantities, plot_info):
         clrs = list(map(float, clrs))
 
     return dict(x=x, y=y, filename=filenames, color=clrs, name=names)
-
-
-def get_data_aiida(projections, sliders_dict, quantities, plot_info):
-    """Query the AiiDA database"""
-    from aiida import load_dbenv, is_dbenv_loaded
-    from aiida.backends import settings
-    if not is_dbenv_loaded():
-        load_dbenv(profile=settings.AIIDADB_PROFILE)
-    from aiida.orm.querybuilder import QueryBuilder
-    from aiida.orm.data.parameter import ParameterData
-
-    filters = {}
-
-    def add_range_filter(bounds, label):
-        # a bit of cheating until this is resolved
-        # https://github.com/aiidateam/aiida_core/issues/1389
-        #filters['attributes.'+label] = {'>=':bounds[0]}
-        filters['attributes.' + label] = {
-            'and': [{
-                '>=': bounds[0]
-            }, {
-                '<': bounds[1]
-            }]
-        }
-
-    for k, v in sliders_dict.items():
-        # Note: filtering is costly, avoid if possible
-        if not v.value == quantities[k]['range']:
-            add_range_filter(v.value, k)
-
-    qb = QueryBuilder()
-    qb.append(
-        ParameterData,
-        filters=filters,
-        project=['attributes.' + p
-                 for p in projections] + ['uuid', 'extras.cif_uuid'],
-    )
-
-    nresults = qb.count()
-    if nresults == 0:
-        plot_info.text = "No matching COFs found."
-        return data_empty
-
-    plot_info.text = "{} COFs found. Plotting...".format(nresults)
-
-    # x,y position
-    x, y, clrs, uuids, names, cif_uuids = zip(*qb.all())
-    plot_info.text = "{} COFs queried".format(nresults)
-    x = map(float, x)
-    y = map(float, y)
-    cif_uuids = map(str, cif_uuids)
-    uuids = map(str, uuids)
-
-    if projections[2] == 'bond_type':
-        #clrs = map(lambda clr: bondtypes.index(clr), clrs)
-        clrs = map(str, clrs)
-    else:
-        clrs = map(float, clrs)
-
-    return dict(x=x, y=y, uuid=cif_uuids, color=clrs, name=names)

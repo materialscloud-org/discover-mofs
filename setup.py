@@ -16,7 +16,8 @@ if __name__ == '__main__':
         classifiers=["Programming Language :: Python"],
         version="0.1.0",
         install_requires=[
-            "bokeh>=1.2", "jsmol-bokeh-extension", "pandas", "sqlalchemy", "ruamel.yaml"
+            "bokeh>=1.2", "jsmol-bokeh-extension>=0.2.1", "pandas",
+            "sqlalchemy", "ruamel.yaml"
         ],
         extras_require={
             "pre-commit": [

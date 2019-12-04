@@ -281,10 +281,10 @@ def update():
         figure = create_plot()
         #TO DO: for some reason this destroys the coupling to source.data
         # to figure out why (and then restrict this to actual redrawing scenarios)
-        l.children[0].children[1] = figure
+        ly.children[0].children[1] = figure
         redraw_plot = False
 
-    update_legends(l)
+    update_legends(ly)
     plot_info.text += " done!"
     btn_plot.button_type = 'success'
     return
@@ -315,17 +315,16 @@ inp_clr.on_change('value', on_change_clr)
 # Create a panel with a new layout
 sizing_mode = 'fixed'
 inputs = widgetbox(*controls, sizing_mode=sizing_mode)
-l = layout(
-    [
-        [inputs, p],
-        [info_block],
-    ], sizing_mode=sizing_mode)
+ly = layout([
+    [inputs, p],
+    [info_block],
+], sizing_mode=sizing_mode)
 update()
 
 # Create each of the tabs
-tab = bmd.Panel(child=l, title='Scatter plot')
+tab = bmd.Panel(child=ly, title='Scatter plot')
 tabs = bmd.widgets.Tabs(tabs=[tab])
 
 # Put the tabs in the current document for display
-curdoc().title = "Covalent Organic Frameworks"
+curdoc().title = "Metal-Organic Frameworks"
 curdoc().add_root(layout([html, tabs]))
