@@ -31,7 +31,6 @@ max_points = 30000
 
 class Quantity(object):
     """Helper functions for plotting a quantity"""
-
     def __init__(self, quantity_str):
         self.quantity = quantities[quantity_str]
 

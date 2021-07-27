@@ -16,8 +16,8 @@ from jsmol_bokeh_extension import JSMol
 #from import_db import get_cif_content
 from detail.query import get_sqlite_data as get_data
 
-html = bmd.Div(
-    text=open(join(dirname(__file__), "description.html")).read(), width=800)
+html = bmd.Div(text=open(join(dirname(__file__), "description.html")).read(),
+               width=800)
 
 download_js = open(join(dirname(__file__), "static", "download.js")).read()
 
@@ -70,8 +70,8 @@ def table_widget(entry):
             entry_dict[new_key] = entry_dict.pop(prop)
 
     # order entry dict
-    entry_dict = OrderedDict(
-        [(k, entry_dict[k]) for k in sorted(list(entry_dict.keys()))])
+    entry_dict = OrderedDict([(k, entry_dict[k])
+                              for k in sorted(list(entry_dict.keys()))])
 
     data = dict(
         labels=[str(k) for k in entry_dict],
@@ -83,18 +83,17 @@ def table_widget(entry):
         TableColumn(field="labels", title="Properties"),
         TableColumn(field="values", title="Values"),
     ]
-    data_table = DataTable(
-        source=source,
-        columns=columns,
-        width=500,
-        height=570,
-        index_position=None,
-        fit_columns=False)
+    data_table = DataTable(source=source,
+                           columns=columns,
+                           width=500,
+                           height=570,
+                           index_position=None,
+                           fit_columns=False)
 
     json_str = json.dumps(entry_dict, indent=2)
-    btn_download_table.callback = bmd.CustomJS(
-        args=dict(string=json_str, filename=entry_dict['name'] + '.json'),
-        code=download_js)
+    btn_download_table.callback = bmd.CustomJS(args=dict(
+        string=json_str, filename=entry_dict['name'] + '.json'),
+                                               code=download_js)
 
     return widgetbox(data_table)
 
@@ -142,8 +141,9 @@ end "cifstring"
     #""".format(get_cif_url(entry.filename))
 )
 
-btn_download_cif.callback = bmd.CustomJS(
-    args=dict(string=cif_str, filename=entry.filename), code=download_js)
+btn_download_cif.callback = bmd.CustomJS(args=dict(string=cif_str,
+                                                   filename=entry.filename),
+                                         code=download_js)
 
 applet = JSMol(
     width=600,

@@ -22,8 +22,10 @@ columns_json = {}
 
 
 def parse_csv(path):
-    data = pd.read_csv(
-        path, low_memory=False, verbose=1, skipinitialspace=True)
+    data = pd.read_csv(path,
+                       low_memory=False,
+                       verbose=1,
+                       skipinitialspace=True)
     print("Read {} data rows from .csv file".format(len(data)))
     return data
 
@@ -55,16 +57,15 @@ def to_sql_k(self,
                 raise ValueError('The type of %s is not a SQLAlchemy '
                                  'type ' % col)
 
-    table = pd.io.sql.SQLTable(
-        name,
-        self,
-        frame=frame,
-        index=index,
-        if_exists=if_exists,
-        index_label=index_label,
-        schema=schema,
-        dtype=dtype,
-        **kwargs)
+    table = pd.io.sql.SQLTable(name,
+                               self,
+                               frame=frame,
+                               index=index,
+                               if_exists=if_exists,
+                               index_label=index_label,
+                               schema=schema,
+                               dtype=dtype,
+                               **kwargs)
     table.create()
     table.insert(chunksize)
 
@@ -101,14 +102,13 @@ def rename_columns(data):
 def fill_db(data, table_name):
     #data.to_sql(table_name, con=engine, if_exists='replace')
     print("# Filling database")
-    to_sql_k(
-        pandas_sql,
-        data,
-        table_name,
-        index=True,
-        index_label='id',
-        keys='id',
-        if_exists='replace')
+    to_sql_k(pandas_sql,
+             data,
+             table_name,
+             index=True,
+             index_label='id',
+             keys='id',
+             if_exists='replace')
 
     with engine.connect() as con:
         test = pd.read_sql("SELECT * FROM {} LIMIT 5".format(table_name), con)
