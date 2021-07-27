@@ -3,7 +3,7 @@
 cd data/
 
 # Download data
-export base_url=https://archive.materialscloud.org/preview_file/afa9ec805767a4da2bdaf4abf774f2ba163d74540d06318c; \
+export base_url=https://archive.materialscloud.org/record/file?filename=MOF_database.tar.gz&record_id=62; \
     wget ${base_url}/MOF_database.tar.gz &&\
     wget ${base_url}/screening_data.tar.gz
 

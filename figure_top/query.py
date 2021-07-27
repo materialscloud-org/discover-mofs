@@ -1,9 +1,13 @@
 """Querying the DB
 """
 from bokeh.models.widgets import RangeSlider, CheckboxButtonGroup
-from config import max_points
+from .config import max_points
 # pylint: disable=too-many-locals
-data_empty = dict(x=[0], y=[0], uuid=['1234'], color=[0], name=['no data'])
+data_empty = dict(x=[0, 1],
+                  y=[0, 1],
+                  uuid=['1234', '2324'],
+                  color=[0, 1],
+                  name=['no data', 'no data'])
 
 
 def get_data_sqla(projections, sliders_dict, quantities, plot_info):

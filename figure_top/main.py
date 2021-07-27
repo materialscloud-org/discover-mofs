@@ -17,8 +17,8 @@ from figure_top.query import data_empty
 from figure_top import config
 from figure_top.config import quantities, presets
 
-html = bmd.Div(
-    text=open(join(config.static_dir, "description.html")).read(), width=800)
+html = bmd.Div(text=open(join(config.static_dir, "description.html")).read(),
+               width=800)
 
 redraw_plot = False
 
@@ -90,9 +90,9 @@ plot_options = [(q, quantities[q]['label']) for q in config.plot_quantities]
 inp_x = Select(title='X', options=plot_options)
 inp_y = Select(title='Y', options=plot_options)
 #inp_clr = Select(title='Color', options=plot_options)
-inp_clr = Select(
-    title='Color',
-    options=plot_options + [('adsorbaphore_label', 'Adsorbaphore')])
+inp_clr = Select(title='Color',
+                 options=plot_options +
+                 [('adsorbaphore_label', 'Adsorbaphore')])
 
 
 def on_filter_change(attr, old, new):  # pylint: disable=unused-argument
@@ -105,8 +105,11 @@ def on_filter_change(attr, old, new):  # pylint: disable=unused-argument
 def get_slider(desc, range, default=None):
     if default is None:
         default = range
-    slider = RangeSlider(
-        title=desc, start=range[0], end=range[1], value=default, step=0.1)
+    slider = RangeSlider(title=desc,
+                         start=range[0],
+                         end=range[1],
+                         value=default,
+                         step=0.1)
 
     slider.on_change('value', on_filter_change)
     return slider
@@ -115,10 +118,10 @@ def get_slider(desc, range, default=None):
 def get_select(desc, values, default=None, labels=None):  # pylint: disable=unused-argument
     if default is None:
         # by default, make all selections active
-        default = range(len(values))
+        default = list(range(len(values)))
 
     if labels is None:
-        labels = map(str, values)
+        labels = list(map(str, values))
 
     # misuse tags to store values without mapping to str
     group = CheckboxButtonGroup(labels=labels, active=default, tags=values)
@@ -195,15 +198,14 @@ def create_plot():
         from bokeh.transform import factor_cmap
         palette = list(q.colors)
         fill_color = factor_cmap('color', palette=palette, factors=q.values)
-        p_new.circle(
-            'x',
-            'y',
-            size=10,
-            source=source,
-            fill_color=fill_color,
-            fill_alpha=0.6,
-            line_alpha=0.4,
-            legend='color')
+        p_new.circle('x',
+                     'y',
+                     size=10,
+                     source=source,
+                     fill_color=fill_color,
+                     fill_alpha=0.6,
+                     line_alpha=0.4,
+                     legend='color')
 
     else:
         cmap = bmd.LinearColorMapper(palette=Viridis256)

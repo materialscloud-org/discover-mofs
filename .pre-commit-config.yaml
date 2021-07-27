@@ -1,14 +1,22 @@
 # yet another python formatter
 - repo: git://github.com/pre-commit/mirrors-yapf
-  sha: v0.19.0
+  rev: v0.30.0
   hooks:
   - id: yapf
-    language: system
+    name: yapf
+    types: [python]
+    exclude: >
+      (?x)^(
+          docs/.*|
+      )$
+    args: ['-i']
 
-# prospector: collection of linters
-- repo: git://github.com/guykisel/prospector-mirror
-  sha: b27f281eb9398fc8504415d7fbdabf119ea8c5e1
+- repo: local
   hooks:
-  - id: prospector
+
+  # prospector: collection of linters
+  - id: pylint
+    name: pylint
+    entry: pylint
+    types: [python]
     language: system
-    types: [file, python]

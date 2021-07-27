@@ -18,7 +18,8 @@ The plots can be configured using yml files:
 ```
 pip install -e .
 ./prepare.sh
-bokeh serve --show figure detail
+./serve-app.sh
+bokeh serve --show figure figure_top detail
 ```
 
 ## Docker
@@ -28,5 +29,5 @@ pip install -e .
 ./prepare.sh
 docker-compose build
 docker-compose up
-# open http://localhost:3245/mofs/select-figure
+# open http://localhost:3247/mofs/select-figure
 ```
