@@ -12,7 +12,7 @@ data_empty = dict(x=[0, 1],
 
 def get_data_sqla(projections, sliders_dict, quantities, plot_info):
     """Query database using SQLAlchemy.
-    
+
     Note: For efficiency, this uses the the sqlalchemy.sql interface which does
     not go via the (more convenient) ORM.
     """

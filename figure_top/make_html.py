@@ -8,7 +8,7 @@ for preset in presets:
     <figure>
       <img class="figure-thumbnail" src="select-figure/static/images/{p}.png">
       <figcaption>
-        <b>Figure {p}</b> 
+        <b>Figure {p}</b>
         {y} vs {x}
       </figcaption>
     </figure>

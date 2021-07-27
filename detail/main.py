@@ -58,7 +58,7 @@ def table_widget(entry):
     from bokeh.models.widgets import DataTable, TableColumn
 
     entry_dict = copy(entry.__dict__)
-    for k, _v in entry_dict.items():
+    for k, _v in entry.__dict__.items():
         if k == 'id' or k == '_sa_instance_state':
             del entry_dict[k]
 
@@ -108,9 +108,10 @@ def get_cif_content_from_os(filename):
 
     url = "https://object.cscs.ch/v1/AUTH_b1d80408b3d340db9f03d373bbde5c1e/discover-mofs/structures/{}".format(
         filename)
-    print(url)
+    #print(url)
     data = requests.get(url)
-    return data.content
+    #print(str(data.content.decode()))
+    return str(data.content.decode())
 
 
 def postprocess_cif_for_jsmol(cif_str):

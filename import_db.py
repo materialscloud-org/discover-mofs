@@ -117,12 +117,12 @@ def fill_db(data, table_name):
 
 def automap_table(engine, table_name):
     """Try to infer model from Database.
-    
+
     This currently does not work because
       1. sqlalchemy can only automap tables with a primary key
       2. pd.to_sql cannot create tables with a primary key
       3. sqlite does not allow table structure to be modified after creation
-      
+
     See https://stackoverflow.com/a/35397969/1069467 for workarounds
     """
     from sqlalchemy.ext.automap import automap_base
