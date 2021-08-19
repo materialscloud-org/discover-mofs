@@ -24,10 +24,12 @@ redraw_plot = False
 
 
 def get_preset_label_from_url():
-    # get preset for figure from arguments
+    """Get preset for figure from arguments"""
     args = curdoc().session_context.request.arguments
     try:
         preset_label = args.get('preset')[0]
+        if isinstance(preset_label, bytes):
+            preset_label = preset_label.decode()
     except (TypeError, KeyError):
         preset_label = 'default'
 
@@ -289,7 +291,6 @@ def update():
     update_legends(ly)
     plot_info.text += " done!"
     btn_plot.button_type = 'success'
-    return
 
 
 btn_plot.on_click(update)
