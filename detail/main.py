@@ -13,7 +13,7 @@ from bokeh.models.widgets import PreText, Button
 from bokeh.io import curdoc
 
 from jsmol_bokeh_extension import JSMol
-#from import_db import get_cif_content
+from import_db import get_cif_content
 from detail.query import get_sqlite_data as get_data
 
 html = bmd.Div(text=open(join(dirname(__file__), "description.html")).read(),
@@ -101,7 +101,7 @@ def table_widget(entry):
 cof_name = get_name_from_url()
 entry = get_data(cof_name, plot_info, get_table_from_url())
 
-
+# This method is unused in new docker implementation
 def get_cif_content_from_os(filename):
     """Load CIF content via GET request from object store."""
     import requests
@@ -122,8 +122,8 @@ def postprocess_cif_for_jsmol(cif_str):
     return re.sub(r'loop_\s*_geom_bond_atom.+', '', cif_str, flags=re.DOTALL)
 
 
-cif_str = get_cif_content_from_os(entry.filename)
-#cif_str = get_cif_content(entry.filename)
+#cif_str = get_cif_content_from_os(entry.filename)
+cif_str = get_cif_content(entry.filename)
 
 info = dict(
     height="100%",
