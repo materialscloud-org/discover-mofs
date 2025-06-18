@@ -16,7 +16,7 @@ if __name__ == '__main__':
         classifiers=["Programming Language :: Python"],
         version="0.1.0",
         install_requires=[
-            "bokeh~=1.3.4", "jsmol-bokeh-extension~=0.2.1", "pandas~=1.3.1", "Jinja2==2.11.3",
+            "bokeh~=1.3.4", "jsmol-bokeh-extension~=0.2.1", "pandas~=1.3.1", "Jinja2==3.1.6",
             "sqlalchemy~=1.3.0", "ruamel.yaml~=0.16.5", "requests~=2.26.0", "MarkupSafe==2.0.1",
         ],
         extras_require={"pre-commit": ["pre-commit~=2.2.0", "pylint~=2.6.0"]})
