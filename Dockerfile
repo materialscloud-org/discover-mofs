@@ -27,13 +27,16 @@ COPY setup.py import_db.py ./
 RUN pip install -e .
 COPY serve-app.sh /opt/
 
+# Put the data on.
+COPY data ./data
+
 #RUN chown -R scientist:scientist /project
 
 #USER scientist
 
 # This environment variable can be changed at build time:
 #   docker build  --build-arg BOKEH_PREFIX=/abc
-ARG BOKEH_PREFIX="abc"
+ARG BOKEH_PREFIX=""
 ENV BOKEH_PREFIX $BOKEH_PREFIX
 
 # start bokeh server
