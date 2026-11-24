@@ -1,0 +1,72 @@
+data_str_m3_o5_o5_f0_pcu.sym.1
+_audit_creation_date              2012-12-10T20:51:17-0500
+_audit_creation_method            fapswitch 2.2
+_symmetry_space_group_name_H-M    P1
+_symmetry_Int_Tables_number       1
+_space_group_crystal_system       tetragonal
+_cell_length_a                    8.938461
+_cell_length_b                    8.938461
+_cell_length_c                    8.13044
+_cell_angle_alpha                 90.0
+_cell_angle_beta                  90.0
+_cell_angle_gamma                 90.0
+_cell_volume                      649.590325722
+
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_type_description
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_type_partial_charge
+C1    C     C_R   0.500000 0.218064 0.500000 0.927320
+C2    C     C_R   0.500000 0.781936 0.500000 0.927320
+C3    C     C_R   0.781936 0.500000 0.500000 0.927320
+C4    C     C_R   0.218064 0.500000 0.500000 0.927320
+C5    C     C_1   0.065197 0.500000 0.500000 -0.182553
+C6    C     C_1   0.934803 0.500000 0.500000 -0.182553
+C7    C     C_1   0.500000 0.065197 0.500000 -0.182553
+C8    C     C_1   0.500000 0.934803 0.500000 -0.182553
+N1    N     N_1   0.500000 0.500000 0.073640 -0.026859
+N2    N     N_1   0.500000 0.500000 0.926360 -0.026859
+O1    O     O_R   0.500000 0.285350 0.636850 -0.615369
+O2    O     O_R   0.500000 0.714650 0.363150 -0.615368
+O3    O     O_R   0.714650 0.500000 0.636850 -0.615369
+O4    O     O_R   0.285350 0.500000 0.363150 -0.615369
+O5    O     O_R   0.500000 0.714650 0.636850 -0.615369
+O6    O     O_R   0.500000 0.285350 0.363150 -0.615369
+O7    O     O_R   0.285350 0.500000 0.636850 -0.615369
+O8    O     O_R   0.714650 0.500000 0.363150 -0.615368
+Zn1   Zn    Zn3+2 0.500000 0.500000 0.682780 0.998800
+Zn2   Zn    Zn3+2 0.500000 0.500000 0.317220 0.998800
+
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_ccdc_geom_bond_type
+N1    N2    T    
+N1    Zn2   S    
+C3    O3    A    
+N2    Zn1   S    
+O6    Zn2   S    
+C3    C6    S    
+C2    O2    A    
+O2    Zn2   S    
+C7    C8    T    
+C1    O6    A    
+O5    Zn1   S    
+C2    O5    A    
+O1    Zn1   S    
+C4    O7    A    
+O7    Zn1   S    
+O8    Zn2   S    
+C4    O4    A    
+C5    C6    T    
+O3    Zn1   S    
+O4    Zn2   S    
+C3    O8    A    
+C1    C7    S    
+C2    C8    S    
+C4    C5    S    
+C1    O1    A    

@@ -1,0 +1,4 @@
+# Cloudflare Pages: the old Bokeh landing page; /figure?preset=..., /figure_top and
+# /detail?name=... keep working as they are (query string kept). Pages serves
+# index.html for every other path by itself (SPA fallback, no 404.html).
+/select-figure   /   301

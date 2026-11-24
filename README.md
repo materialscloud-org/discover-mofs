@@ -1,53 +1,39 @@
-# LSMO property visualizer app
+# Metal-Organic Frameworks
 
-Using
+Interactive exploration of 324,426 hypothetical metal-organic frameworks
+(MOFs) screened for CO2 capture: scatter plots of their computed properties (all
+MOFs, and the high-performing ones), and a page with the structure and all
+properties of each MOF.
+Data: [doi:10.24435/materialscloud:2018.0016/v3](https://doi.org/10.24435/materialscloud:2018.0016/v3)
+(Materials Cloud Archive record `nsp7v-2dk91`).
 
-- bokeh server
-- sqlite backend
-  (AiiDA backend in alpha)
+A static single-page app, the port of the Bokeh "discover-mofs" section of
+Materials Cloud (the old app is commit [`3e20e9c`](https://github.com/materialscloud-org/discover-mofs/tree/3e20e9c) of this
+repository; data decisions are documented in `scripts/prepareForFrontend.py`).
 
-## Configuration
+## Development
 
-The plots can be configured using yml files:
+This app was migrated to a single page app, with the intention of providing users a serverless way to explore this data.
 
-- `figure/filters.yml`: defines available filters
-- `figure/presets.yml`: defines presets for axis + filter settings
+The legacy software, with tools to containerize it (which may be out of date), is commit [`3e20e9c`](https://github.com/materialscloud-org/discover-mofs/tree/3e20e9c) of this repository.
 
-## Data
+If you would like to launch the Single Page App locally:
 
-The data is availble on the [Materials Cloud Archive](https://archive.materialscloud.org/record/2018.0016/v3). Place both the MOF_database.tar.gz and screening_data.tar.gz inside the data directory and run ./prepare.sh. This will unzip and build the database.
-
-## Installation
-
-```
-pip install -e .
-./prepare.sh
-./serve-app.sh
-bokeh serve --show figure figure_top detail
-```
-
-## Docker
-
-The docker image should build successfully with;
-the database.db, and all cif files present in data/structures.
-
-If this is not the case,
-the database can be built from the [archive data](https://archive.materialscloud.org/record/2018.0016/v3).
-
-Simply place the MOF_database.tar.gz and screening_data.tar.gz inside the data dir and run:
-
-```
-pip install -e . # Python3.7.15
-./prepare.sh
+```bash
+pnpm install
+python3 scripts/prepareForFrontend.py # about 3 minutes, ~6 GB memory
+pnpm dev        # http://localhost:5173 (needs public/data/)
+pnpm test       # node --test tests/*.test.mjs
+pnpm lint
+pnpm build      # static site in dist/ (copies public/data/: 1.5 GB)
 ```
 
-If the correct data dir containing; database.db, 2 csvs and a large structures dir.
-The docker image can be built with all the data inside with
+## Deployment
 
-```
-docker compose build
-docker compose up
-# open http://localhost:3247/select-figure
-```
+The app is currently deployed by hand to Cloudflare Pages with wrangler with no CI/CD, so changes have to be pushed to materialscloud cloudflare. This is because of the sharding strategy used and that the data is too large for git and comes from the Materials Cloud Archive.
 
-A built version of this docker image can be found on the private mc-Harbor docker registry.
+```bash
+python3 scripts/prepareForFrontend.py  # if data is missing
+pnpm build
+npx wrangler pages deploy dist --project-name discover-mofs
+```
